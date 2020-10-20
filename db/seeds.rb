@@ -20,12 +20,12 @@ p1 = Package.create(name: "Exterior Auto Detailing" , features: "Hand washing an
 p2 = Package.create(name: "Interior Auto Detailing", features: "Seat cleaing, interior surface cleaning, floor cleaning, and deodorizing", price: 100)
 p3 = Package.create(name: "Protective Restorative Treatments", features: "Headlight restoration, engine wash, exterior coating, and minor dent repair", price: 100)
 
-s1 = Service.create(customer_id: c1.id, vehicle_id: v1.id, package_id: p1.id)
-s2 = Service.create(customer_id: c1.id, vehicle_id: v2.id, package_id: p2.id)
-s3 = Service.create(customer_id: c1.id, vehicle_id: v2.id, package_id: p3.id)
-s4 = Service.create(customer_id: c2.id, vehicle_id: v3.id, package_id: p1.id)
-s5 = Service.create(customer_id: c3.id, vehicle_id: v4.id, package_id: p1.id)
-s6 = Service.create(customer_id: c4.id, vehicle_id: v5.id, package_id: p2.id)
+s1 = Service.create(vehicle_id: v1.id, package_id: p1.id)
+s2 = Service.create(vehicle_id: v2.id, package_id: p2.id)
+s3 = Service.create(vehicle_id: v2.id, package_id: p3.id)
+s4 = Service.create(vehicle_id: v3.id, package_id: p1.id)
+s5 = Service.create(vehicle_id: v4.id, package_id: p1.id)
+s6 = Service.create(vehicle_id: v5.id, package_id: p2.id)
 
 binding.pry
 0

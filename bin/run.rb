@@ -1,6 +1,5 @@
 require_relative '../config/environment'
 
-app = AppCli.new
+app = AppCLI.new
 app.run
 
-puts "HELLO WORLD"

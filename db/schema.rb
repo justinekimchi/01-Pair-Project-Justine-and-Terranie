@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 4) do
   end
 
   create_table "services", force: :cascade do |t|
-    t.integer "customer_id"
     t.integer "vehicle_id"
     t.integer "package_id"
   end
