@@ -109,8 +109,6 @@
               register
             end
 
-          
-
       end 
 
       def service_price
@@ -151,31 +149,28 @@
           menu.choice 'Confirm/Update Address',->{address_confirmation}
         end
       end
-      
-     
         
       def order_confirmation
         system("clear")
         font = TTY::Font.new(:standard)
         pastel = Pastel.new
         puts pastel.yellow(font.write("SCHEDULE APPOINTMENT", letter_spacing:2))
-        puts "==================================================================================="
-        
-        puts "Please give us a convenient date(MM/DD)and we'll call you to set up an appointment between 7 AM-7 PM"
-        answer=gets.chomp
-        puts "What is the make and model of your vehicle so we know what to look for?"
-        answer2=gets.chomp
-        puts "Thank you for your order! We'll see you on #{answer}. Your customized car wash is on its way for your #{answer2}!"
+        puts "==========================================================================================================================================="
+        prompt = TTY::Prompt.new
+        a1=prompt.ask('Please give us a convenient date(MM/DD) that works for you and we will call you to set up a time:', required: true)
+        a2=prompt.ask('What is the make and model of your vehicle so we know what to look for?',required: true) #we would create a prompt question here to get make and model and create a new vehicle instance to match current or existing user
+        puts  "=========================================================================================================================================="
+        puts "Thank you for your order! We'll see you on #{a1}. Your customized car wash is on its way for your #{a2}!"
         sleep(3.5)
         font = TTY::Font.new(:doom)
         pastel = Pastel.new
         puts pastel.red(font.write("YOU'RE ALL SET!", letter_spacing:2))
-        puts "==================================================================================="
+        puts "============================================================================================================================================"
         sleep(6.0)
         system("clear")
         font = TTY::Font.new(:standard)
         pastel = Pastel.new
-        puts pastel.yellow(font.write("BACK TO MAIN MENU", letter_spacing:2))
+        puts pastel.yellow(font.write("BACK   TO   MAIN   MENU", letter_spacing:2))
         menu
       end 
 
@@ -184,8 +179,6 @@
         puts "We apologize for any difficulties you experienced ordering your service online. \nPlease give us a call at (281) 765-7689 or email us at help@wowzers.com \nand one of our representatives will be delighted to assist you!"
         menu
       end 
-
-     
         
       def order_history 
         system("clear")
@@ -194,7 +187,7 @@
       
         puts pastel.yellow(font.write("ORDER HISTORY", letter_spacing:2))
 
-        puts "==================================================================================="
+        puts "==========================================================================================================================================="
         puts "Below you will see the vehicle(s) that you have had serviced with us previously:"
         sleep(1.5)
         a = Customer.first.vehicles[0].make 
@@ -210,10 +203,6 @@
         f= Customer.first.vehicles[0].services[0].package.name 
         g = Customer.first.vehicles[1].services[0].package.name 
         puts "#{f}\n#{g}"
-        
-        
-        
-        
           
         puts "==================================================================================="
         sleep(1.5)
@@ -225,7 +214,6 @@
           menu.choice 'Exit',-> {exit}
         end 
       end
-  
 
       def delete_menu
         puts "==================================================================================="
@@ -244,6 +232,7 @@
          pastel = Pastel.new
          puts pastel.yellow(font.write("COME  BACK  SOON", letter_spacing:1))
         puts "We hate to see you go! Until next time!"
+        puts "================================================================================================================"
       end 
 
       def service_menu 
@@ -295,7 +284,7 @@
         font = TTY::Font.new(:standard)
          pastel = Pastel.new
          puts pastel.yellow(font.write("EXTERIOR PACKAGE", letter_spacing:3))
-         puts "==================================================================================="
+         puts "================================================================================================================================================================================="
          puts "Great choice! This deluxe service includes:\n •hand washing \n •drying \n •waxing \n •buffing \n •rim cleaning \n •polishing \n •degreasing \n •debugging"  
          puts "==================================================================================="
          prompt = TTY::Prompt.new
@@ -312,7 +301,7 @@
         font = TTY::Font.new(:standard)
         pastel = Pastel.new
         puts pastel.red(font.write("INTERIOR  AUTO   DETAILING", letter_spacing:1))
-        puts "==================================================================================="
+        puts "=============================================================================================================================================================================================="
         puts "Excellent choice! This premier service includes: \n •seat cleaning \n •interior surface cleaning \n •floor cleaning \n •deodorizing"  
        
         puts "==================================================================================="
@@ -330,7 +319,7 @@
         font = TTY::Font.new(:standard)
         pastel = Pastel.new
         puts pastel.red(font.write("PROTECT & RESTORE", letter_spacing:2))
-        puts "==================================================================================="
+        puts "==========================================================================================================================================="
         puts "Your wish is our commnand! This reconstructive service includes: \n •headlight restoration \n •engine wash \n •exterior coating \n •minor dent repair" 
         puts "==================================================================================="
         prompt = TTY::Prompt.new
@@ -358,8 +347,6 @@
          end 
       end
   
-   
-       
        def register 
             system("clear")
             font = TTY::Font.new(:starwars)
@@ -368,29 +355,16 @@
             puts  "𝕎 𝔼 𝕃 𝐂 𝕆 𝕄 𝔼 🏎💨💨💨💨💨💨💨💨"
             sleep(2.0)
             prompt = TTY::Prompt.new
-            prompt.ask('What is your first and last name?', required: true)
-            answer1=gets.chomp
-            prompt.ask('What is your address?(Only street address required. We only service Houston clients.)',require: true)
-            answer2 = gets.chomp 
-            prompt.ask('What is your phone number? (Please put in format ##########))', require: true)
-            answer3 = gets.chomp 
-            prompt.ask('What is your email address?', require: true)
-            answer4 = gets.chomp
-            @new_customer=Customer.create(name:answer1, address: answer2, phone_number: answer3, email: answer4)
+            a1=prompt.ask('What is your first and last name?', required: true)
+            a2=prompt.ask('What is your address?(Only street address required. We only service Houston clients.)',required: true)
+            a3=prompt.ask('What is your phone number? (Please put in format ##########))', required: true)
+            a4=prompt.ask('What is your email address?', required: true)
+            @new_customer=Customer.create(name:a1, address: a2, phone_number: a3, email: a4)
             puts "🎉𝙍𝙀𝙂𝙄𝙎𝙏𝙍𝘼𝙏𝙄𝙊𝙉 𝘾𝙊𝙈𝙋𝙇𝙀𝙏𝙀!🎉"
             sleep(2.0)
             puts "Thank you for supporting small businesses!!"
             sleep(2.5)
             package_menu
-           
        end
-
-       
-
-   
-       
-   
-  
-       
    end
 
