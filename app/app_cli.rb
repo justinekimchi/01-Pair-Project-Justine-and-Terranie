@@ -1,5 +1,6 @@
    require 'pry'  
    require 'tty-prompt'
+   require 'colorize'
    
    class AppCLI
        attr_accessor :existing_customer, :new_customer, :existing_customer_instance
@@ -68,11 +69,11 @@
          font = TTY::Font.new(:standard)
          pastel = Pastel.new
          puts pastel.yellow(font.write("WASH-ON-WHEELS", letter_spacing:4))
-         puts "Welcome to Wash On Wheels!!" 
+         puts "Welcome to Wash On Wheels!!".colorize(:cyan)
          sleep(1.5)
-         puts "Customized Car Detailing Delivered to Your Door!"
+         puts "Customized Car Detailing Delivered to Your Door!".colorize(:cyan)
          sleep (2.0)
-         puts "How can we W.O.W. you today?"
+         puts "How can we W.O.W. you today?".colorize(:cyan)
          sleep(1.5)
    
          puts "🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽🚙🚗🧽"
@@ -90,21 +91,22 @@
    
       def login
         
-         puts "➤Please log in by entering your first and last name."
+         puts "➤Please log in by entering your first and last name.".colorize(:light_yellow).underline
          answer = gets.chomp
 
          name_array=Customer.all.map{|customer|customer.name}  
          @existing_customer=name_array.find {|name|name==answer}
             if @existing_customer
-              puts "\nWelcome back, #{answer.split(" ").first}!"
+              puts "\nWelcome back, #{answer.split(" ").first}!".colorize(:light_cyan)
               sleep(4.0)
+              puts "================================================================================"
               prompt=TTY::Prompt.new
-              selection=prompt.select ('How would you like to get started?') do |menu|
+              selection=prompt.select ('How would you like to get started?'.colorize(:light_green).underline) do |menu|
               menu.choice'View My Order History',->{order_history}
               menu.choice'View Packages', ->{package_menu}
               end
             else
-              puts "Welcome to the WOW experience, #{answer.split(" ").first}! \nRegistration will only take a minute or your money back! j/k!"
+              puts "Welcome to the WOW experience, #{answer.split(" ").first}! \nRegistration will only take a minute or your money back! j/k!".colorize(:cyan)
               sleep(4.0)
               register
             end
@@ -118,7 +120,7 @@
       end 
       
       def update_address
-        puts "What is your new address?"
+        puts "What is your new address?".colorize(:light_yellow)
         answer=gets.chomp        
         user = Customer.find_by(name: @existing_customer) #if we don't know the parent id, we can still update any value in a hash using this code
         user.update(address: answer)
@@ -136,13 +138,15 @@
 
         @existing_customer_address 
           prompt = TTY::Prompt.new
-          selection=prompt.select("Just to confirm your address... Do you still reside at #{@existing_customer_address}?") do |menu|
+          selection=prompt.select("Just to confirm your address... Do you still reside at #{@existing_customer_address}?".colorize(:light_yellow)) do |menu|   
             menu.choice 'Yes', -> {order_confirmation}
             menu.choice 'No', ->{update_address}
           end 
       end
 
       def new_or_existing_customer
+        puts ""
+        puts ""
         prompt=TTY::Prompt.new
         selection=prompt.select('If this is your first time ordering, please proceed to order confirmation. Otherwise, please verify your address for us.') do |menu|
           menu.choice 'Order Confirmation',-> {order_confirmation}
@@ -154,19 +158,21 @@
         system("clear")
         font = TTY::Font.new(:standard)
         pastel = Pastel.new
-        puts pastel.yellow(font.write("SCHEDULE APPOINTMENT", letter_spacing:2))
+        puts pastel.yellow(font.write("SCHEDULE    APPT", letter_spacing:2))
         puts "==========================================================================================================================================="
         prompt = TTY::Prompt.new
-        a1=prompt.ask('Please give us a convenient date(MM/DD) that works for you and we will call you to set up a time:', required: true)
-        a2=prompt.ask('What is the make and model of your vehicle so we know what to look for?',required: true) #we would create a prompt question here to get make and model and create a new vehicle instance to match current or existing user
+        a1=prompt.ask('Please give us a convenient date(MM/DD) that works for you and we will call you to set up a time:'.colorize(:light_blue), required: true)
+        puts ""
+        a2=prompt.ask('What is the make and model of your vehicle so we know what to look for?'.colorize(:light_blue), required: true) #we would create a prompt question here to get make and model and create a new vehicle instance to match current or existing user
         puts  "=========================================================================================================================================="
-        puts "Thank you for your order! We'll see you on #{a1}. Your customized car wash is on its way for your #{a2}!"
+        puts "Thank you for your order! We'll see you on #{a1}. Your customized car wash is on its way for your #{a2}!".colorize(:yellow)
         sleep(3.5)
         font = TTY::Font.new(:doom)
         pastel = Pastel.new
         puts pastel.red(font.write("YOU'RE ALL SET!", letter_spacing:2))
+        puts "🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉"
         puts "============================================================================================================================================"
-        sleep(6.0)
+        sleep(7.0)
         system("clear")
         font = TTY::Font.new(:standard)
         pastel = Pastel.new
@@ -188,7 +194,7 @@
         puts pastel.yellow(font.write("ORDER HISTORY", letter_spacing:2))
 
         puts "==========================================================================================================================================="
-        puts "Below you will see the vehicle(s) that you have had serviced with us previously:"
+        puts "Below you will see the vehicle(s) that you have had serviced with us previously:".colorize(:light_yellow)
         sleep(1.5)
         a = Customer.first.vehicles[0].make 
         b=  Customer.first.vehicles[0].model
@@ -199,7 +205,7 @@
         sleep(1.5)
   
         puts "==================================================================================="
-        puts "Here is also a list of your previous packages:"
+        puts "Here is also a list of your previous packages:".colorize(:light_yellow)
         f= Customer.first.vehicles[0].services[0].package.name 
         g = Customer.first.vehicles[1].services[0].package.name 
         puts "#{f}\n#{g}"
@@ -208,7 +214,7 @@
         sleep(1.5)
   
         prompt=TTY::Prompt.new
-        selection=prompt.select("How do you wish to proceed?") do |menu|
+        selection=prompt.select("How do you wish to proceed?".colorize(:light_yellow)) do |menu|
           menu.choice 'View Packages',-> {package_menu}
           menu.choice 'Contact Us',->{contact}
           menu.choice 'Exit',-> {exit}
@@ -218,7 +224,7 @@
       def delete_menu
         puts "==================================================================================="
         prompt = TTY::Prompt.new
-        selection=prompt.select('As you wish! Your order has been deleted. How would you like to proceed?') do |menu|
+        selection=prompt.select('As you wish! Your order has been deleted. How would you like to proceed?'.colorize(:light_blue)) do |menu|
          menu.choice 'View Past Services History' ,-> {order_history}
          menu.choice 'Create New Order', ->{package_menu}
          menu.choice 'Contact a Representative', ->{contact}
@@ -231,7 +237,7 @@
          font = TTY::Font.new(:doom)
          pastel = Pastel.new
          puts pastel.yellow(font.write("COME  BACK  SOON", letter_spacing:1))
-        puts "We hate to see you go! Until next time!"
+        puts "We hate to see you go! Until next time!".colorize(:light_magenta)
         puts "================================================================================================================"
       end 
 
@@ -253,7 +259,7 @@
       def coupe_price
         coupe = service_price + 5
         puts "==================================================================================="
-        puts "Awesome! For your Coupe, the service total will amount to $#{coupe}.00"
+        puts "Awesome! For your Coupe, the service total will amount to $#{coupe}.00".colorize(:blue)
         new_or_existing_customer
        
       end  
@@ -261,21 +267,21 @@
       def sedan_price 
         sedan = service_price + 10
         puts "==================================================================================="
-        puts "Great! For your Sedan, the service total will amount to $#{sedan}.00"
+        puts "Great! For your Sedan, the service total will amount to $#{sedan}.00".colorize(:light_blue)
         new_or_existing_customer
       end 
 
       def truck_price
         truck = service_price + 25
         puts "==================================================================================="
-        puts "Perfect! For your Truck, the service total will amount to $#{truck}.00"
+        puts "Perfect! For your Truck, the service total will amount to $#{truck}.00".colorize(:light_blue)
         new_or_existing_customer
       end 
 
       def van_price 
         van = service_price + 15
         puts "==================================================================================="
-        puts "Excellent! For your Van, the service total will amount to $#{van}.00"
+        puts "Excellent! For your Van, the service total will amount to $#{van}.00".colorize(:light_blue)
         new_or_existing_customer
       end 
 
@@ -285,10 +291,10 @@
          pastel = Pastel.new
          puts pastel.yellow(font.write("EXTERIOR PACKAGE", letter_spacing:3))
          puts "================================================================================================================================================================================="
-         puts "Great choice! This deluxe service includes:\n •hand washing \n •drying \n •waxing \n •buffing \n •rim cleaning \n •polishing \n •degreasing \n •debugging"  
+         puts "Great choice! This deluxe service includes:\n •hand washing \n •drying \n •waxing \n •buffing \n •rim cleaning \n •polishing \n •degreasing \n •debugging"
          puts "==================================================================================="
          prompt = TTY::Prompt.new
-         selection=prompt.select('What type of vehicle would you like to have serviced?') do |menu|
+         selection=prompt.select('What type of vehicle would you like to have serviced?'.colorize(:light_blue)) do |menu|
           menu.choice 'Coupe' ,-> {coupe_price}
           menu.choice 'Sedan', ->{sedan_price}
           menu.choice 'Truck', ->{truck_price}
@@ -306,7 +312,7 @@
        
         puts "==================================================================================="
         prompt = TTY::Prompt.new
-        selection=prompt.select('What type of vehicle would you like to have serviced?') do |menu|
+        selection=prompt.select('What type of vehicle would you like to have serviced?'.colorize(:light_blue)) do |menu|
           menu.choice 'Coupe' ,-> {coupe_price}
           menu.choice 'Sedan', ->{sedan_price}
           menu.choice 'Truck', ->{truck_price}
@@ -320,10 +326,10 @@
         pastel = Pastel.new
         puts pastel.red(font.write("PROTECT & RESTORE", letter_spacing:2))
         puts "==========================================================================================================================================="
-        puts "Your wish is our commnand! This reconstructive service includes: \n •headlight restoration \n •engine wash \n •exterior coating \n •minor dent repair" 
+        puts "Your wish is our commnand! This reconstructive service includes: \n •headlight restoration \n •engine wash \n •exterior coating \n •minor dent repair"
         puts "==================================================================================="
         prompt = TTY::Prompt.new
-        selection=prompt.select('What type of vehicle would you like to have serviced?') do |menu|
+        selection=prompt.select('What type of vehicle would you like to have serviced?'.colorize(:light_blue)) do |menu|
           menu.choice 'Coupe' ,-> {coupe_price}
           menu.choice 'Sedan', ->{sedan_price}
           menu.choice 'Truck', ->{truck_price}
@@ -339,7 +345,7 @@
          
          puts "============================================================================================================"
          prompt = TTY::Prompt.new
-         prompt.select("Please select one of our available packages:") do |menu|
+         prompt.select("Please select one of our available packages:".colorize(:green).underline) do |menu|
            menu.choice "Exterior Auto Detailing", -> {exterior_auto_detailing}
            menu.choice "Interior Auto Detailing", -> {interior_auto_detailing}
            menu.choice "Protective Restorative Treatments", -> {protective_restorative_treatments}
@@ -355,14 +361,18 @@
             puts  "𝕎 𝔼 𝕃 𝐂 𝕆 𝕄 𝔼 🏎💨💨💨💨💨💨💨💨"
             sleep(2.0)
             prompt = TTY::Prompt.new
-            a1=prompt.ask('What is your first and last name?', required: true)
-            a2=prompt.ask('What is your address?(Only street address required. We only service Houston clients.)',required: true)
-            a3=prompt.ask('What is your phone number? (Please put in format ##########))', required: true)
-            a4=prompt.ask('What is your email address?', required: true)
+            a1=prompt.ask('What is your first and last name?'.colorize(:cyan).underline, required: true)
+            puts ""
+            a2=prompt.ask('What is your address?(Only street address required. We only service Houston clients.)'.colorize(:cyan).underline,required: true)
+            puts ""
+            a3=prompt.ask('What is your phone number? (Please put in format ##########))'.colorize(:cyan).underline, required: true)
+            puts ""
+            a4=prompt.ask('What is your email address?'.colorize(:cyan).underline, required: true)
+            puts ""
             @new_customer=Customer.create(name:a1, address: a2, phone_number: a3, email: a4)
             puts "🎉𝙍𝙀𝙂𝙄𝙎𝙏𝙍𝘼𝙏𝙄𝙊𝙉 𝘾𝙊𝙈𝙋𝙇𝙀𝙏𝙀!🎉"
             sleep(2.0)
-            puts "Thank you for supporting small businesses!!"
+            puts "Thank you for supporting small businesses!!".colorize(:light_yellow).underline
             sleep(2.5)
             package_menu
        end

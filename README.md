@@ -1,59 +1,76 @@
-# Module One Final Project Guidelines
+# Module One Project: CRUD CL APPLICATION 
 
-Congratulations, you're at the end of module one! You've worked crazy hard to get here and have learned a ton.
+Wash On Wheels (W.O.W.) is a state-of-the-art Command Line Application with CRUD capabilites. Its functionality enables users to order customized car detailing and wash services without leaving their doorstep. Customers can register and log onto the app, browse through packages, make selections, change or delete existing information stored on file, or contact a representative for further assistance.  
 
-For your final project, we'll be building a Command Line database application.
+# Install Instructions 
 
-## Project Requirements
+1. Fork and clone this repository using this link: 
+2. Ensure that the following gems are installed in your 'Gemfile' : colorize, tty-prompt, tty-font, pry, activerecord, sqlite3, and rake. If not, you will need to 'gem install' each of them individually, delete 'Gemfile.lock' and run 'bundle' in order for the code to run succesfully.
+3. You're all set. Happy coding! 
 
-### Option One - Data Analytics Project
 
-1. Access a Sqlite3 Database using ActiveRecord.
-2. You should have at minimum three models including one join model. This means you must have a many-to-many relationship.
-3. You should seed your database using data that you collect either from a CSV, a website by scraping, or an API.
-4. Your models should have methods that answer interesting questions about the data. For example, if you've collected info about movie reviews, what is the most popular movie? What movie has the most reviews?
-5. You should provide a CLI to display the return values of your interesting methods.  
-6. Use good OO design patterns. You should have separate classes for your models and CLI interface.
+# Contributor Guide 
 
-  **Resource:** [Easy Access APIs](https://github.com/learn-co-curriculum/easy-access-apis)
+The foundation of this application is centered around 4 models: Customer, Vehicle, Package, and Service. These classes are listed in the 'app/models' folder and the structure of their tables can be viewed in 'db/migrate'.
 
-### Option Two - Command Line CRUD App
+***Important: Any modifications that you wish to make to these four models cannot be done in the existing migration files. You must create a new migration and run 'db:migrate" in order for changes to be properly applied. Do not make any changes to the 'db/schema.rb' file either. Any migrations that you create will automatically be reflected in this file so there is no need to modify it. 
 
-1. Access a Sqlite3 Database using ActiveRecord.
-2. You should have a minimum of three models.
-3. You should build out a CLI to give your user full CRUD ability for at least one of your resources. For example, build out a command line To-Do list. A user should be able to create a new to-do, see all todos, update a todo item, and delete a todo. Todos can be grouped into categories, so that a to-do has many categories and categories have many to-dos.
-4. Use good OO design patterns. You should have separate classes for your models and CLI interface.
+In the 'db/seeds.rb' file, you will find a list of the instances that we created to test our methods. Feel free to add more as you see fit.  
 
-### Brainstorming and Proposing a Project Idea
+The 'app/app_cli' file contains the 'AppCLI' class, which is the interface of our application. It structures everything that a user sees when we run 'ruby bin/run.rb'. The AppClI consists of two attribute accessors: existing_customer and new_customer, and it also contains the followingn methods:
 
-Projects need to be approved prior to launching into them, so take some time to brainstorm project options that will fulfill the requirements above.  You must have a minimum of four [user stories](https://en.wikipedia.org/wiki/User_story) to help explain how a user will interact with your app.  A user story should follow the general structure of `"As a <role>, I want <goal/desire> so that <benefit>"`. For example, if we were creating an app to randomly choose nearby restaurants on Yelp, we might write:
+#run - this method jumpstarts how the application will navigate starting with the welcome message and menu screen 
 
-* As a user, I want to be able to enter my name to retrieve my records
-* As a user, I want to enter a location and be given a random nearby restaurant suggestion
-* As a user, I should be able to reject a suggestion and not see that restaurant suggestion again
-* As a user, I want to be able to save to and retrieve a list of favorite restaurant suggestions
+#logo - this method displays our logo 
 
-## Instructions
+#welcome - this method welcomes users to our app
 
-1. Fork and clone this repository.
-2. Build your application. Make sure to commit early and commit often. Commit messages should be meaningful (clearly describe what you're doing in the commit) and accurate (there should be nothing in the commit that doesn't match the description in the commit message). Good rule of thumb is to commit every 3-7 mins of actual coding time. Most of your commits should have under 15 lines of code and a 2 line commit is perfectly acceptable.
-3. Make sure to create a good README.md with a short description, install instructions, a contributor's guide and a link to the license for your code.
-4. Make sure your project checks off each of the above requirements.
-5. Prepare a video demo (narration helps!) describing how a user would interact with your working project.
-    * The video should:
-      - Have an overview of your project. (2 minutes max)
-6. Prepare a presentation to follow your video. (3 minutes max)
-    * Your presentation should:
-      - Describe something you struggled to build, and show us how you ultimately implemented it in your code.
-      - Discuss 3 things you learned in the process of working on this project.
-      - Address what, if anything, you would change or add to what you have today.
-      - Present any code you would like to highlight.   
-7. *OPTIONAL, BUT RECOMMENDED*: Write a blog post about the project and process.
+#menu - this method gives users four options: Login, Register, Contact Us, or Exit 
 
----
-### Common Questions:
-- How do I turn off my SQL logger?
-```ruby
-# in config/environment.rb add this line:
-ActiveRecord::Base.logger = nil
-```
+#login - this method allows existing users to login or redirect new users to the register method 
+
+#service_price - this is a helper method that returns the base price of every package 
+
+#update_address - this method gives an existing user the option to update their address
+
+#address_confirmation - this method allows existing users to verify the address saved on file, otherwise, they can make a selection to go to the next menu to update it 
+
+#new_or_existing_customer - this method asks returning customers to confirm their address before checking out or otherwise, any new customers can proceed to checkout page
+
+#order_confirmation - this method allows users to specify their chosen date of service and to specify which vehicle will be serviced 
+
+#contact - this method provides users with contact information for the company 
+
+#order_history - this method displays the details of past vehicles that were serviced and which packages were chosen 
+
+#delete_menu - after confirming that an order has been deleted for a customer, this method prompts them with choices on how to proceed 
+
+#exit - this method allows users to exit the application
+
+#service_menu - this method allows users to complete an order, view service history, change their order, delete their current order or exit the application
+
+#coupe_price - this method uses the #service_price helper method to determine the total cost of the specific package chosen for service 
+
+#sedan_price - this method uses the #service_price helper method to determine the total cost of the specific package chosen for service 
+
+#truck_price - this method uses the #service_price helper method to determine the total cost of the specific package chosen for service 
+
+#van_price - this method uses the #service_price helper method to determine the total cost of the specific package chosen for service 
+
+#exterior_auto_detailing - this method lists the details of the chosen package and prompts them to select a vehicle type to be serviced with this package
+
+#interior_auto_detailing - this method lists the details of the chosen package and prompts them to select a vehicle type to be serviced with this package
+
+#protective_restorative_treatments - this method lists the details of the chosen package and prompts them to select a vehicle type to be serviced with this package
+
+#package_menu - this method allows users to select one of our available packages or exit application
+
+#register - this method allows new users to register and be saved into the application database. It also prompts them with the package menu 
+
+
+
+
+
+
+
+
