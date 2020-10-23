@@ -139,7 +139,7 @@
         @existing_customer_address 
           prompt = TTY::Prompt.new
           selection=prompt.select("Just to confirm your address... Do you still reside at #{@existing_customer_address}?".colorize(:light_yellow)) do |menu|   
-            menu.choice 'Yes', -> {order_confirmation}
+            menu.choice 'Yes', -> {service_menu}
             menu.choice 'No', ->{update_address}
           end 
       end
@@ -148,9 +148,11 @@
         puts ""
         puts ""
         prompt=TTY::Prompt.new
-        selection=prompt.select('If this is your first time ordering, please proceed to order confirmation. Otherwise, please verify your address for us.') do |menu|
+        selection=prompt.select('If this is your first time ordering, please proceed to order confirmation or delete your current order. Otherwise, please verify your address for us.') do |menu|
           menu.choice 'Order Confirmation',-> {order_confirmation}
-          menu.choice 'Confirm/Update Address',->{address_confirmation}
+          menu.choice 'Delete Order',->{delete_menu}
+          menu.choice 'Verify/Update Address',->{address_confirmation}
+          
         end
       end
         
@@ -248,7 +250,7 @@
             puts pastel.red(font.write("SERVICE  MENU", letter_spacing:4))
             prompt = TTY::Prompt.new
             prompt.select("How would you like to proceed?") do |menu|
-            menu.choice "Complete Order", -> {address_confirmation}
+            menu.choice "Complete Order", -> {order_confirmation}
             menu.choice 'View Service History' ,-> {order_history}
             menu.choice "Change Order", -> {package_menu}
             menu.choice "Delete Order", -> {delete_menu}
