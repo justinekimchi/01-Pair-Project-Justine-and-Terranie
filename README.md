@@ -4,14 +4,14 @@ Wash On Wheels (W.O.W.) is a state-of-the-art Command Line Application with CRUD
 
 # Install Instructions 
 
-1. Fork and clone this repository using this link: 
+1. Fork and clone this repository using this link: https://github.com/justinekimchi/01-Pair-Project-Justine-and-Terranie.git
 2. Ensure that the following gems are installed in your 'Gemfile' : colorize, tty-prompt, tty-font, pry, activerecord, sqlite3, and rake. If not, you will need to 'gem install' each of them individually, delete 'Gemfile.lock' and run 'bundle' in order for the code to run succesfully.
 3. You're all set. Happy coding! 
 
 
 # Contributor Guide 
 
-The foundation of this application is centered around 4 models: Customer, Vehicle, Package, and Service. These classes are listed in the 'app/models' folder and the structure of their tables can be viewed in 'db/migrate'.
+The foundation of this application is centered around four models: Customer, Vehicle, Package, and Service. These classes are listed in the 'app/models' folder and the structure of their tables can be viewed in 'db/migrate'.
 
 ***Important: Any modifications that you wish to make to these four models cannot be done in the existing migration files. You must create a new migration and run 'db:migrate" in order for changes to be properly applied. Do not make any changes to the 'db/schema.rb' file either. Any migrations that you create will automatically be reflected in this file so there is no need to modify it. 
 
@@ -65,7 +65,7 @@ The 'app/app_cli' file contains the 'AppCLI' class, which is the interface of ou
 
 #package_menu - this method allows users to select one of our available packages or exit application
 
-#register - this method allows new users to register and be saved into the application database. It also prompts them with the package menu 
+#register - this method allows new users to register and be saved into the application database and also prompts them with the package menu 
 
 
 
